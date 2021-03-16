@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+    <link href="./player.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/3.1.0/screenfull.min.js"
+        integrity="sha512-vpf3xaeHkIgfuvUQ4+shWBe7v26Qn6h72tDVRLb9OYFTRB19BTBxQalCGCAkRnVnGnQyLjSNEHvkkqdKirGETQ=="
+        crossorigin="anonymous"></script>
+    <title>Flat Player Sample</title>
+
+</head>
+
+<body>
+    <div class="flat-html5-player-wrapper">
+        <div class="flat-player" id="player">
+            <div class="flat-video-preview-wrapper pointer">
+                <video :src="video.url" ref="videoElem" class="flat-video pointer"></video>
+            </div>
+            <div class="flat-video-footer">
+                <div class="flat-video-progressbar pointer" @click="skipVideo">
+                    <div :style="{width: progressPercentage() + '%'}" class="flat-video-current-progress pointer"></div>
+                </div>
+
+                <div class="flat-video-controls">
+                    <div class="flat-video-controls-left">
+                        <div class="">
+                            <button v-if="isPaused()" @click="play" class="flat-video-control-single">
+                                <i class="fa fa-fw fa-play"></i>
+                            </button>
+                            <button v-if="!isPaused()" @click="pause" class="flat-video-control-single">
+                                <i class="fa fa-fw fa-pause"></i>
+                            </button>
+                        </div>
+                        <div class="flat-video-volume-rocker">
+                            <button @click="muteToggle" v-if="isMuted()" class="flat-video-control-single">
+                                <i class="fa fa-fw fa-volume-off"></i>
+                            </button>
+                            <button @click="muteToggle" v-if="!isMuted()" class="flat-video-control-single">
+                                <i class="fa fa-fw fa-volume-up"></i>
+                            </button>
+                            <div class="flat-video-volume-progress pointer" @click="changeVolume">
+                                <div :style="{width: volume() + '%'}"
+                                    class="flat-video-volume-progress-current pointer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flat-video-controls-right">
+                        <div class="flat-video-time-container">
+                            <span
+                                class="flat-video-current-time">{{formatTime(currentTime())}}</span><span>/</span><span
+                                class="flat-video-total-time">{{formatTime(duration())}}</span>
+                        </div>
+                        <div class="flat-video-buttons-right-wrapper">
+                            <button v-if="isFullScreen" @click="toggleFullScreen" class="flat-video-control-single">
+                                <i class="fa fa-fw fa-compress"></i>
+                            </button>
+                            <button v-if="!isFullScreen" @click="toggleFullScreen" class="flat-video-control-single">
+                                <i class="fa fa-fw fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="player.js"></script>
+</body>
+
+</html>
